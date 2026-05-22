@@ -14,12 +14,14 @@ class LinkCreate(LinkBase):
     pass
 
 
-class LinkResponse(LinkBase):
+class LinkResponse(BaseModel):
     id: int
+    original_url: str
     short_code: str
     clicks: int
     created_at: datetime
     is_active: bool
+    short_url: str
 
     class Config:
         from_attributes = True
@@ -30,3 +32,4 @@ class LinkStats(BaseModel):
     original_url: str
     clicks: int
     created_at: datetime
+    qr_code: str

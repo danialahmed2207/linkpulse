@@ -1,9 +1,23 @@
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import Home from './pages/Home'
+import LinkDetail from './pages/LinkDetail'
+import './App.css'
+
 function App() {
   return (
-    <div style={{ fontFamily: 'system-ui', padding: '2rem', maxWidth: '720px', margin: '0 auto' }}>
-      <h1>🔗 LinkPulse</h1>
-      <p>URL-Shortener mit Analytics — Grundgerüst bereit.</p>
-    </div>
+    <BrowserRouter>
+      <nav className="navbar">
+        <div className="nav-container">
+          <Link to="/" className="logo">🔗 LinkPulse</Link>
+        </div>
+      </nav>
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/link/:code" element={<LinkDetail />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 

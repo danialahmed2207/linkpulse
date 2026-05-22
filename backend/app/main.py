@@ -3,10 +3,10 @@ LinkPulse API — URL-Shortener mit Analytics.
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import settings
 from app.database import engine, Base
+from app.routers import links
 
-# Tabellen automatisch erstellen (für Dev; in Prod Alembic verwenden)
+# Tabellen automatisch erstellen
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -24,6 +24,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(links.router)
+app.include_router(links.redirect_router)
 
 
 @app.get("/")
