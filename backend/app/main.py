@@ -4,7 +4,7 @@ LinkPulse API — URL-Shortener mit Analytics.
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
-from app.routers import links
+from app.routers import links, auth
 
 # Tabellen automatisch erstellen
 Base.metadata.create_all(bind=engine)
@@ -12,7 +12,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="LinkPulse API",
     description="Professioneller URL-Shortener mit Analytics",
-    version="1.0.0",
+    version="1.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -25,13 +25,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
 app.include_router(links.router)
 app.include_router(links.redirect_router)
 
 
 @app.get("/")
 def root():
-    return {"message": "LinkPulse API", "version": "1.0.0"}
+    return {"message": "LinkPulse API", "version": "1.1.0"}
 
 
 @app.get("/health")
